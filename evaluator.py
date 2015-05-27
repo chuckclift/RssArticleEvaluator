@@ -1,3 +1,4 @@
+# coding: utf-8
 import time
 
 articles = open("articles.txt").read()
