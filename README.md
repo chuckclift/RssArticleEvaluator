@@ -9,5 +9,4 @@ prompts the user for some sort of evaluation.  Currently, it prompts the user fo
 but this could be tweaked to ask the user for the purpose of clustering the article.  
 
 
-This is a personal project, so feel free to use this code however you want to
-(as long as it's legal).
+This is a personal project, so feel free to use this code however you want to.

@@ -1,92 +1,30 @@
 <article>
-100,000 integrated circuits with a Japanese manufacturer. Part of the
-specification was the defect rate: one chip in 10,000. A few weeks later
-the order arrived: one large box containing thousands of ICs, and a
-small one containing just ten. Attached to the small box was a label
-that read: “These are the faulty ones.”
-Prepared exclusively for Zach
-10 CHAPTER1 APRAGMATIC PHILOSOPHY
-If only we really had this kind of control over quality. But the real
-world just won’t let us produce much that’s truly perfect, particularly
-not bug-free software. Time, technology, and temperament all conspire
-against us.
-However, this doesn’t have to be frustrating. As Ed Yourdon described
-in an article in IEEE Software [You95], you can discipline yourself to
-write software that’s good enough—good enough for your users, for future
-maintainers, for your own peace of mind. You’ll find that you are
-more productive and your users are happier. And you may well find
-that your programs are actually better for their shorter incubation.
+How To Geek
+Wink is a smart home/home automation platform created through a partnership between Quirky and GE to manage and control smart home products made by the partnered companies. The platform was later expanded to include more companies and now the Wink system is capable of controlling a wide range of devices from multiple brands including everything from lightbulbs to appliances.
+
+The Wink Hub is the centerpiece of the Wink system and serves as a link both
+between your smarthome devices (such that your smart bulbs can turn on when
+triggered by another smart home device like a smoke detector) as well as the
+smarthome devices and the greater Internet (so you can make adjustments to
+your home while sitting at your office or on vacation). Further, the Hub uses
+the Wink mobile software that provides an all-in-one dashboard for controlling
+all your smarthome devices.
+
+One of the biggest selling points of the Wink Hub is that it features multiple radio sets and supports smarthome devices that use ZigBee, Z-Wave, Bluetooth, Wi-Fi, and a 433 Mhz radio chip used by Lutron and Kidde devices, and it has an open API which makes it easy for companies to make compatible products.
 </article>
 <article>
+Whether you’re using Linux on your desktop or a server, there are good tools that will scan your system for duplicate files and help you remove them to free up space. Solid graphical and command-line interfaces are both available.
 
-Before we go any further, we need to qualify what we’re about to say.
-The phrase “good enough” does not imply sloppy or poorly produced
-code. All systems must meet their users’ requirements to be successful.
-We are simply advocating that users be given an opportunity to
-participate in the process of deciding when what you’ve produced is
-good enough.
-Involve Your Users in the Trade
+Duplicate files are an unnecessary waste of disk space. After all, if you really need the same file in two different locations you could always set up a symbolic link or hard link, storing the data in only one location on disk.
 
+FSlint is available in various Linux distributions’ software repositories, including Ubuntu, Debian, Fedora, and Red Hat. Just fire up your package manager and install the “fslint” package. This utility provides a convenient graphical interface by default, but it also includes command-line versions of its various functions. Like many Linux applications, the FSlint graphical interface is just a front-end that uses the FSlint commands underneath.
 
+Don’t let that scare you away from using FSlint’s convenient graphical interface, though. By default, it opens with the Duplicates pane selected and your home directory as the default search path. All you have to do is click the Find button and FSlint will find a list of duplicate files in directories under your home folder. Use the buttons to delete any files you want to remove, and double-click them to preview them.
 
-requirements from them.2 But how often do you ask them
-how good they want their software to be? Sometimes there’ll be no
-choice. If you’re working on pacemakers, the space shuttle, or a lowlevel
-library that will be widely disseminated, the requirements will
-be more stringent and your options more limited. However, if you’re
-working on a brand new product, you’ll have different constraints. The
-marketing people will have promises to keep, the eventual end users
-may have made plans based on a delivery schedule, and your company
-will certainly have cash-flow constraints. It would be unprofessional to
-ignore these users’ requirements simply to add new features to the program,
-or to polish up the code just one more time. We’re not advocating
-panic: it is equally unprofessional to promise impossible time scales
-and to cut basic engineering corners to meet a deadline.
-2. That was supposed to be a joke!
-Prepared exclusively for Zach
-GOOD-ENOUGH SOFTWARE 11
-The scope and quality of the system you produce should be specified
-as part of that system’s requirements.
-TIP 7
-Make Quality a Requirements Issue
-Often you’ll be in situations where trade-offs are involved. Surprisingly,
-many users would rather use software with some rough edges today
-than wait a year for the multimedia version. Many IT departments with
-tight budgets would agree. Great software today is often preferable to
-perfect software tomorrow. If you give your users something to play with
-early, their feedback will often lead you to a better eventual solution (see
-Tracer Bullets, page 48).
-Know When to Stop
+Note that the command-line utilities aren’t in your path by default, so you can’t run them like typical commands. On Ubuntu, you’ll find them under /usr/share/fslint/fslint. So, if you wanted to run the entire fslint scan on a single directory, here are the commands you’d run on Ubuntu:
 </article>
 <article>
-In some ways, programming is like painting. You start with a blank
-canvas and certain basic raw materials. You use a combination of science,
-art, and craft to determine what to do with them. You sketch
-out an overall shape, paint the underlying environment, then fill in the
-details. You constantly step back with a critical eye to view what you’ve
-done. Every now and then you’ll throw a canvas away and start again.
-But artists will tell you that all the hard work is ruined if you don’t
-know when to stop. If you add layer upon layer, detail over detail, the
-painting becomes lost in the paint.
-Don’t spoil a perfectly good program by overembellishment and overrefinement.
-Move on, and let your code stand in its own right for a
-while. It may not be perfect. Don’t worry: it could never be perfect. (In
-Chapter 6, page 171, we’ll discuss philosophies for developing code in
-an imperfect world.)
-Related sections include:
-Tracer Bullets, page 48
-The Requirements Pit, page 202
-Pragmatic Teams, page 224
-Great Expectations, page 255
-Prepared exclusively for Zach
-12 CHAPTER1 APRAGMATIC PHILOSOPHY
-Challenges
-Look at the manufacturers of the software tools and operating systems that
-you use. Can you find any evidence that these companies are comfortable
-shipping software they know is not perfect? As a user, would you rather
-(1) wait for them to get all the bugs out, (2) have complex software and
-accept some bugs, or (3) opt for simpler software with fewer defects?
-Consider the effect of modularization on the delivery of software. Will it
-take more or less time to get a monolithic block of software to the required
-quality compared with a system designed
+GeForce GTX 980s certainly aren’t any cheaper. If anything they cost slightly more. The GTX 970 is still mostly a $330 board, though discounts and rebates push certain models down closer to $310, pulling even with the least-expensive Radeon R9 290X cards. As with last month, it’s difficult for us to declare one offering better than the other. Their strengths and weaknesses are already well-known, and the face-off between two well-matched contenders often becomes a passion play (yes, even when one uses significantly more power). Choose a favorite based on your requirements and allegiances. 
+
+Last month, the Radeon R9 280X took a recommendation for its $240-$250 price tag, which fell closer to $230 after rebates. Now you can find the 280X for $230, and rebates nudge at least one model nearer to $200. Availability looks to be waning (not surprising given Tahiti’s age). But scoring a deal today gets you playable performance at 2560x1440. 
 </article>
