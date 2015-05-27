@@ -1,6 +1,6 @@
 # coding: utf-8
 import time
-
+import re
 
 ## includes the word with spaces and punctuation
 ## to ensure that we aren't counting when the word
@@ -11,17 +11,10 @@ import time
 ## " " + word + "\."
 
 
-keywords = []
-newKeyword = ""
-
-while len(newKeyword) ==0:
-    newKeyword = input("Enter a keyword \n")
-    if newKeyword == "done":
-        break
-    keywords.append(newKeyword)
-    newKeyword = ""
 
 articles = open("articles.txt").read()
+
+
 
 ##cleans up the formatting, making it
 ##more readable
@@ -34,21 +27,53 @@ articles = articles.replace("\n"," ")
 last = articles.rfind("</article")
 articles = articles[:last]
 
+
 ##splitting articles into a list for processing
 ##in the upcoming loop
 articles = articles.split("</article>")
+
+
+for workingArticle in articles:
+    modifiedArticle = workingArticle.replace(",", " ").lower()
+    modifiedArticle = modifiedArticle.replace("?", " ")
+    modifiedArticle = modifiedArticle.replace("!", " ")
+    modifiedArticle = modifiedArticle.replace(".", " ")
+    modifiedArticle = modifiedArticle.replace("\"", " ")
+    modifiedArticle = modifiedArticle.replace("(", " ")
+    modifiedArticle = modifiedArticle.replace(")", " ")
+    modifiedArticle = modifiedArticle.replace(":", " ")
+    modifiedArticle = modifiedArticle.replace("/", " ")
+
+    wordList = modifiedArticle.split(" ")
+    [word.strip() for word in wordList]
+    
+    wordList = filter(None, wordList)
+    for word in wordList:
+        print(word)
+
+        
+           
+            
+    
+
+
+
+
+
+
 
 counter =0
 gradeList = []
 finalCsv = ""
 
+
 for current in articles:
     articleLength = len(current)
 
-    for i in keywords:
-        regex = "[., ]" + i + "[., ]"
-        count = len(re.findall(regex, current))
-        finalCsv = finalCsv + count
+##    for i in keywords:
+##        regex = "[ \.\?\"\'!,]?" + i + "[ \.\?\"\'!,s]?"
+##        count = len(re.findall(regex, current))
+##        finalCsv = finalCsv + "," + count
     
 
     
