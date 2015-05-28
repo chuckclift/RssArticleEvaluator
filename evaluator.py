@@ -2,18 +2,10 @@
 import time
 import re
 
-## includes the word with spaces and punctuation
-## to ensure that we aren't counting when the word
-## is inside of another word
-
-## for each word add to search terms
-## " " + word + " "
-## " " + word + "\."
-
-
+commonWords = open("commonWords.txt").read().split("\n")
+commonWords = [word.strip() for word in commonWords]
 
 articles = open("articles.txt").read()
-
 
 
 ##cleans up the formatting, making it
@@ -34,20 +26,36 @@ articles = articles.split("</article>")
 
 
 for workingArticle in articles:
-    modifiedArticle = workingArticle.replace(",", " ").lower()
-    modifiedArticle = modifiedArticle.replace("?", " ")
-    modifiedArticle = modifiedArticle.replace("!", " ")
-    modifiedArticle = modifiedArticle.replace(".", " ")
-    modifiedArticle = modifiedArticle.replace("\"", " ")
-    modifiedArticle = modifiedArticle.replace("(", " ")
-    modifiedArticle = modifiedArticle.replace(")", " ")
-    modifiedArticle = modifiedArticle.replace(":", " ")
-    modifiedArticle = modifiedArticle.replace("/", " ")
+    modifiedArticle = workingArticle.lower()
+    unwantedChars = ("," , "?" , "!" , "."  , "/" , "(" , ")" , ":")
 
+    for char in unwantedChars:
+        modifiedArticle = modifiedArticle.replace(char, " ")               
+                
     wordList = modifiedArticle.split(" ")
-    [word.strip() for word in wordList]
+    wordList = [word.strip() for word in wordList]
     
-    wordList = filter(None, wordList)
+    wordList = filter(None, wordList) ##removes all empty strings
+    wordList = [word for word in wordList]  ##converting it back into a list
+
+    for i in commonWords:
+        while wordList.count(i) > 0:
+            wordList.pop(wordList.index(i))
+    
+##
+##    for i in range(0,len(wordList)-1):
+##
+##        if i >= len(wordList) -1:
+##            break
+##        if commonWords.count(wordList[i]) > 0:
+##            wordList.pop(i)
+##            i = i - 2
+##                
+##
+
+            
+        
+    
     for word in wordList:
         print(word)
 
@@ -69,12 +77,7 @@ finalCsv = ""
 
 for current in articles:
     articleLength = len(current)
-
-##    for i in keywords:
-##        regex = "[ \.\?\"\'!,]?" + i + "[ \.\?\"\'!,s]?"
-##        count = len(re.findall(regex, current))
-##        finalCsv = finalCsv + "," + count
-    
+  
 
     
 
