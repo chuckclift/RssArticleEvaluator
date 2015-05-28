@@ -41,32 +41,12 @@ for workingArticle in articles:
     for i in commonWords:
         while wordList.count(i) > 0:
             wordList.pop(wordList.index(i))
-    
-##
-##    for i in range(0,len(wordList)-1):
-##
-##        if i >= len(wordList) -1:
-##            break
-##        if commonWords.count(wordList[i]) > 0:
-##            wordList.pop(i)
-##            i = i - 2
-##                
-##
-
-            
         
     
     for word in wordList:
         print(word)
 
         
-           
-            
-    
-
-
-
-
 
 
 
@@ -90,7 +70,7 @@ for current in articles:
         ##every fifth line, it stops
         ##and waits for the user to read
         counter += 1
-        if counter == 5:
+        if counter is 5:
             counter = 0
             var = input("")
             ##user presses enter to continue reading
@@ -101,7 +81,7 @@ for current in articles:
     ##skip this part
     grade = ""
     #if articleLength > 0:      ##this skips any empty articles that might
-    while len(grade) == 0:
+    while len(grade) is 0:
         grade = input("Grade??(1-10)")
     gradeList.append(grade)
         
