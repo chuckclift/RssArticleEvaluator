@@ -1,11 +1,47 @@
-# coding: utf-8
 import time
 import re
 
-commonWords = open("commonWords.txt").read().split("\n")
-commonWords = [word.strip() for word in commonWords]
+classifierFile = open("classifierWords.txt", encoding="utf8")
+classifierWords = classifierFile.read()
 
-articles = open("articles.txt").read()
+classifierWords = classifierWords.split("\n")
+classifierWords = filter(None, classifierWords)
+classifierWords = [word.strip() for word in classifierWords]
+classifierFile.close()
+
+
+articleFile = open("articles.txt", encoding="utf8")
+articles = articleFile.read()
+articleFile.close()
+
+class Article(object):
+    
+
+
+    def __init__(self, searchKeywords, thisArticleText):
+        self.searchKeywords = searchKeywords
+        self.articleText = thisArticleText.replace("  ", "")
+        self.keywordFrequencies = []
+
+        for word in searchKeywords:
+            regex = "[ \.\?\"\'!,]" + word + "[ \.\?\"\'!,s]"
+            count = len(re.findall(regex, self.articleText))
+            self.keywordFrequencies.append(count)
+            
+
+
+
+    def getText(self):
+        return self.articleText
+
+    def reportData(self):
+        csv = ""
+        for value in self.keywordFrequencies:
+            csv = csv + str(value) + ","
+            
+        return csv
+
+        
 
 
 ##cleans up the formatting, making it
@@ -22,31 +58,13 @@ articles = articles[:last]
 
 ##splitting articles into a list for processing
 ##in the upcoming loop
-articles = articles.split("</article>")
+articleTextList = articles.split("</article>")
+articleObjects = []
 
 
-for workingArticle in articles:
-    modifiedArticle = workingArticle.lower()
-    unwantedChars = ("," , "?" , "!" , "."  , "/" , "(" , ")" , ":")
-
-    for char in unwantedChars:
-        modifiedArticle = modifiedArticle.replace(char, " ")               
-                
-    wordList = modifiedArticle.split(" ")
-    wordList = [word.strip() for word in wordList]
-    
-    wordList = filter(None, wordList) ##removes all empty strings
-    wordList = [word for word in wordList]  ##converting it back into a list
-
-    for i in commonWords:
-        while wordList.count(i) > 0:
-            wordList.pop(wordList.index(i))
-        
-    
-    for word in wordList:
-        print(word)
-
-        
+for workingArticle in articleTextList:
+    current = Article(classifierWords, workingArticle)
+    articleObjects.append(current)
 
 
 
@@ -55,7 +73,9 @@ gradeList = []
 finalCsv = ""
 
 
-for current in articles:
+for articleOb in articleObjects:
+
+    current = articleOb.getText()
     articleLength = len(current)
   
 
@@ -79,17 +99,14 @@ for current in articles:
     ##to assign a grade.  It won't let him submit
     ##an empty string so he doesn't accidentally
     ##skip this part
-    grade = ""
+    category = ""
     #if articleLength > 0:      ##this skips any empty articles that might
-    while len(grade) is 0:
-        grade = input("Grade??(1-10)")
-    gradeList.append(grade)
+    while len(category) is 0:
+        category = input("Category??(product, news, linux)")
+    finalCsv = finalCsv + articleOb.reportData() + category + "\n"
         
 
-for grade in gradeList:
-    print(grade)
-
-
+print(finalCsv)
 
 
 
