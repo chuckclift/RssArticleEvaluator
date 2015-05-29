@@ -12,8 +12,6 @@ developer
 program
 cloud
 smart
-raspberry
-pi
 server
 gpu
 graphics
@@ -24,4 +22,8 @@ command-line
 application
 gtx
 amd
-wink
+$100
+$200
+$300
+$400
+Availability

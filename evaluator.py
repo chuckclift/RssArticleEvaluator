@@ -25,7 +25,7 @@ class Article(object):
         for word in searchKeywords:
             count = 0
             regex = "[ \.\?\"\'!,]" + word + "[ \.\?\"\'!,s]"
-            count = len(re.findall(regex, self.articleText))
+            count = len(re.findall(regex, self.articleText.lower()))
             self.keywordFrequencies.append(count)
             
 
