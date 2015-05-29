@@ -24,3 +24,4 @@ command-line
 application
 gtx
 amd
+wink
