@@ -41,6 +41,52 @@ class Article(object):
             
         return csv
 
+def makeCsv(articleObjList):
+    
+    finalCsv = ""
+    counter = 0
+
+
+    for articleOb in articleObjList:
+
+    
+
+        current = articleOb.getText()
+        articleLength = len(current)
+  
+
+    
+
+        while len(current) > 0:
+        ##prints out one line for the user to read
+            print(current[:70])
+            current = current[70:]
+
+
+        ##every fifth line, it stops
+        ##and waits for the user to read
+            counter += 1
+            if counter is 5:
+                counter = 0
+                var = input("")
+            ##user presses enter to continue reading
+
+    ##after the user is done reading, he is asked
+    ##to assign a category.  It won't let him submit
+    ##an empty string so he doesn't accidentally
+    ##skip this part
+        category = ""
+        while len(category) is 0:
+            category = input("Category??(product, news, linux)\n")
+        done = input("Done?(y/n)\n")
+
+        finalCsv = finalCsv + articleOb.reportData() + category + "\n"
+
+        if done is "y":
+            return finalCsv
+        
+    return finalCsv
+    
         
 
 
@@ -67,45 +113,9 @@ for workingArticle in articleTextList:
     articleObjects.append(current)
 
 
-
-counter =0
-gradeList = []
-finalCsv = ""
-
-
-for articleOb in articleObjects:
-
-    current = articleOb.getText()
-    articleLength = len(current)
-  
-
-    
-
-    while len(current) > 0:
-        ##prints out one line for the user to read
-        print(current[:70])
-        current = current[70:]
-
-
-        ##every fifth line, it stops
-        ##and waits for the user to read
-        counter += 1
-        if counter is 5:
-            counter = 0
-            var = input("")
-            ##user presses enter to continue reading
-
-    ##after the user is done reading, he is asked
-    ##to assign a category.  It won't let him submit
-    ##an empty string so he doesn't accidentally
-    ##skip this part
-    category = ""
-    while len(category) is 0:
-        category = input("Category??(product, news, linux)")
-    finalCsv = finalCsv + articleOb.reportData() + category + "\n"
         
 
-print(finalCsv)
+print(makeCsv(articleObjects))
 
 
 
