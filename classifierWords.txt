@@ -1,7 +1,5 @@
-﻿amd
-nvidia
+﻿nvidia
 intel
-linux
 windows
 iot
 intelligence
@@ -15,6 +13,7 @@ program
 cloud
 smart
 raspberry
+pi
 server
 gpu
 graphics
@@ -23,5 +22,5 @@ gameplay
 utility
 command-line
 application
-applications
 gtx
+amd
