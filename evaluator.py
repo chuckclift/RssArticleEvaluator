@@ -78,11 +78,12 @@ def makeCsv(articleObjList):
         category = ""
         while len(category) is 0:
             category = input("Category??(product, news, linux)\n")
+
         done = input("Done?(y/n)\n")
 
         finalCsv = finalCsv + articleOb.reportData() + category + "\n"
 
-        if done is "y":
+        if done == "y":
             return finalCsv
         
     return finalCsv
