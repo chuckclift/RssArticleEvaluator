@@ -13,6 +13,9 @@ articleFile = open("articles.txt", encoding="utf8")
 articles = articleFile.read()
 articleFile.close()
 
+LOWEST_GRADE = 1
+HIGHEST_GRADE = 5
+
 class Article(object):
     
 
@@ -49,14 +52,9 @@ def makeCsv(articleObjList):
 
     for articleOb in articleObjList:
 
-    
-
         current = articleOb.getText()
         articleLength = len(current)
   
-
-    
-
         while len(current) > 0:
         ##prints out one line for the user to read
             print(current[:70])
@@ -75,15 +73,28 @@ def makeCsv(articleObjList):
     ##to assign a category.  It won't let him submit
     ##an empty string so he doesn't accidentally
     ##skip this part
-        category = ""
-        while len(category) is 0:
-            category = input("Category??(product, news, linux)\n")
+        grade = ""
+        while len(grade) is 0:
+            question = ("Grade?("
+                       + str(LOWEST_GRADE)
+                       + "-"
+                       + str(HIGHEST_GRADE)
+                       + ")\n")
+            grade = input(question)
 
-        done = input("Done?(y/n)\n")
+            if len(grade) > 0:
+                if int(grade) < LOWEST_GRADE:
+                    grade = ""
+                    print("Your number is too low\n")
+                elif  int(grade) > HIGHEST_GRADE:
+                    grade = ""
+                    print("Your number is too high\n")
 
-        finalCsv = finalCsv + articleOb.reportData() + category + "\n"
+        finished = input("Done?(y/n)\n")
 
-        if done == "y":
+        finalCsv = finalCsv + articleOb.reportData() + grade + "\n"
+
+        if finished == "y":
             return finalCsv
         
     return finalCsv
@@ -116,7 +127,11 @@ for workingArticle in articleTextList:
 
         
 
-print(makeCsv(articleObjects))
+outputCsv = open("csvData.txt","w")
+outputCsv.write(makeCsv(articleObjects))
+outputCsv.close()
+
+
 
 
 
