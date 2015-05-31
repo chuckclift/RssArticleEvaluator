@@ -26,4 +26,12 @@ $100
 $200
 $300
 $400
-Availability
+availability
+software
+stack
+investment
+ssd
+hardware
+vr
+virtual
+reality
