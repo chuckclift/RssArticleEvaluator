@@ -74,12 +74,15 @@ def makeCsv(articleObjList):
     ##an empty string so he doesn't accidentally
     ##skip this part
         grade = ""
+
+        question = ("Grade?("
+                    + str(LOWEST_GRADE)
+                    + "-"
+                    + str(HIGHEST_GRADE)
+                    + ")\n")
+        
         while len(grade) is 0:
-            question = ("Grade?("
-                       + str(LOWEST_GRADE)
-                       + "-"
-                       + str(HIGHEST_GRADE)
-                       + ")\n")
+
             grade = input(question)
 
             if len(grade) > 0:
