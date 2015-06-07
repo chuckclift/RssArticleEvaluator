@@ -1,30 +1,9 @@
 ﻿<article>
-How To Geek
-Wink is a smart home/home automation platform created through a partnership between Quirky and GE to manage and control smart home products made by the partnered companies. The platform was later expanded to include more companies and now the Wink system is capable of controlling a wide range of devices from multiple brands including everything from lightbulbs to appliances.
-
-The Wink Hub is the centerpiece of the Wink system and serves as a link both
-between your smarthome devices (such that your smart bulbs can turn on when
-triggered by another smart home device like a smoke detector) as well as the
-smarthome devices and the greater Internet (so you can make adjustments to
-your home while sitting at your office or on vacation). Further, the Hub uses
-the Wink mobile software that provides an all-in-one dashboard for controlling
-all your smarthome devices.
-
-One of the biggest selling points of the Wink Hub is that it features multiple radio sets and supports smarthome devices that use ZigBee, Z-Wave, Bluetooth, Wi-Fi, and a 433 Mhz radio chip used by Lutron and Kidde devices, and it has an open API which makes it easy for companies to make compatible products.
+Sometimes you want or need a program to automatically run with elevated privileges as soon as you sign into Windows, but how do you set something like this up? Today’s SuperUser Q&A post has some helpful advice for a frustrated reader.
 </article>
 <article>
-Whether you’re using Linux on your desktop or a server, there are good tools that will scan your system for duplicate files and help you remove them to free up space. Solid graphical and command-line interfaces are both available.
-
-Duplicate files are an unnecessary waste of disk space. After all, if you really need the same file in two different locations you could always set up a symbolic link or hard link, storing the data in only one location on disk.
-
-FSlint is available in various Linux distributions’ software repositories, including Ubuntu, Debian, Fedora, and Red Hat. Just fire up your package manager and install the “fslint” package. This utility provides a convenient graphical interface by default, but it also includes command-line versions of its various functions. Like many Linux applications, the FSlint graphical interface is just a front-end that uses the FSlint commands underneath.
-
-Don’t let that scare you away from using FSlint’s convenient graphical interface, though. By default, it opens with the Duplicates pane selected and your home directory as the default search path. All you have to do is click the Find button and FSlint will find a list of duplicate files in directories under your home folder. Use the buttons to delete any files you want to remove, and double-click them to preview them.
-
-Note that the command-line utilities aren’t in your path by default, so you can’t run them like typical commands. On Ubuntu, you’ll find them under /usr/share/fslint/fslint. So, if you wanted to run the entire fslint scan on a single directory, here are the commands you’d run on Ubuntu:
+You already solved the input side; you specified an encoding when reading. Do the same when writing: specify a codec to use to write out the file that can handle Unicode, including the non-breaking whitespace character at codepoint U+FEFF. UTF-8 is usually a good default choice:
 </article>
 <article>
-GeForce GTX 980s certainly aren’t any cheaper. If anything they cost slightly more. The GTX 970 is still mostly a $330 board, though discounts and rebates push certain models down closer to $310, pulling even with the least-expensive Radeon R9 290X cards. As with last month, it’s difficult for us to declare one offering better than the other. Their strengths and weaknesses are already well-known, and the face-off between two well-matched contenders often becomes a passion play (yes, even when one uses significantly more power). Choose a favorite based on your requirements and allegiances. 
-
-Last month, the Radeon R9 280X took a recommendation for its $240-$250 price tag, which fell closer to $230 after rebates. Now you can find the 280X for $230, and rebates nudge at least one model nearer to $200. Availability looks to be waning (not surprising given Tahiti’s age). But scoring a deal today gets you playable performance at 2560x1440. 
+This is my article, don't you like it? I love pie.  I like the raspberry pi, but sometimes I wonder whether it is worth its cost.  Nvidia. 
 </article>
