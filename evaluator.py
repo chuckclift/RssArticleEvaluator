@@ -1,19 +1,14 @@
 ﻿from __future__ import division
-import time
 import re
 
-classifierFile = open("classifierWords.txt", encoding="utf8")
-classifierWords = classifierFile.read()
-classifierWords = classifierWords.split("\n")
-classifierWords = filter(None, classifierWords)
-classifierWords = [word.strip() for word in classifierWords]
-classifierFile.close()
+with open("classifierWords.txt") as f:
+    classifierWords = f.read()
+    classifierWords = classifierWords.split("\n")
+    classifierWords = filter(None, classifierWords)
+    classifierWords = [word.strip() for word in classifierWords]
 
-articleFile = open("articles.txt", encoding="utf8")
-articles = articleFile.read()
-articleFile.close()
-
-
+with open("articles.txt") as g:
+    articles = g.read()
 
 LOWEST_GRADE = 1
 HIGHEST_GRADE = 5
@@ -55,7 +50,13 @@ def makeCsv(articleObjList):
 
         while len(current) > 0:
             # prints out one line for the user to read
-            print(current[:70])
+
+            try:
+                print(current[:70])
+            except UnicodeEncodeError:
+                troubleString = current[:70].encode('utf-16')
+                print("We're Doomed")
+
             current = current[70:]
 
             # every fifth line, it stops
@@ -120,6 +121,10 @@ for workingArticle in articleTextList:
     currentArticle = Article(classifierWords, workingArticle)
     articleObjects.append(currentArticle)
 
-outputCsv = open("csvData.txt", "w")
-outputCsv.write(makeCsv(articleObjects))
-outputCsv.close()
+finalCsv = makeCsv(articleObjects)
+
+with open("csvData.txt","w") as f:
+    f.write(finalCsv)
+
+
+
