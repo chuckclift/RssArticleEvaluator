@@ -1,6 +1,8 @@
 ﻿from __future__ import division
 import re
 
+
+
 with open("classifierWords.txt") as f:
     classifierWords = f.read()
     classifierWords = classifierWords.split("\n")
@@ -10,28 +12,29 @@ with open("classifierWords.txt") as f:
 with open("articles.txt") as g:
     articles = g.read()
 
+
 LOWEST_GRADE = 1
 HIGHEST_GRADE = 5
 MAX_WORD_COUNT = 20
 
 
 class Article(object):
-    def __init__(self, searchKeywords, thisArticleText):
-        self.searchKeywords = searchKeywords
-        self.articleText = thisArticleText.replace("  ", "")
+    def __init__(self, keywords, article_text):
+        self.keywords = keywords
+        self.article_text = article_text.replace("  ", "")
         self.keywordFrequencies = []
 
-        for word in searchKeywords:
+        for word in keywords:
             count = 0
             regex = "[ \.\?\"\'!,]" + word + "[ \.\?\"\'!,s]"
-            count = len(re.findall(regex, self.articleText.lower()))
-            normalizedScore = count / MAX_WORD_COUNT
-            self.keywordFrequencies.append(normalizedScore)
+            count = len(re.findall(regex, self.article_text.lower()))
+            normalized_score = count / MAX_WORD_COUNT
+            self.keywordFrequencies.append(normalized_score)
 
-    def getText(self):
-        return self.articleText
+    def get_text(self):
+        return self.article_text
 
-    def reportData(self):
+    def report_data(self):
         csv = ""
         for value in self.keywordFrequencies:
             csv = csv + str(value) + ","
@@ -39,23 +42,21 @@ class Article(object):
         return csv
 
 
-def makeCsv(articleObjList):
-    finalCsv = ""
+def make_csv(article_object_list):
+    final_csv = ""
     counter = 0
 
-    for articleOb in articleObjList:
+    for articleOb in article_object_list:
 
-        current = articleOb.getText()
-        articleLength = len(current)
+        current = articleOb.get_text()
 
         while len(current) > 0:
-            # prints out one line for the user to read
 
+            # prints out one line for the user to read
             try:
                 print(current[:70])
             except UnicodeEncodeError:
-                troubleString = current[:70].encode('utf-16')
-                print("We're Doomed")
+                pass
 
             current = current[70:]
 
@@ -96,12 +97,12 @@ def makeCsv(articleObjList):
         # Normalizing the data on the scale of zero to one
         grade = (int(grade) - LOWEST_GRADE) / (HIGHEST_GRADE - LOWEST_GRADE)
 
-        finalCsv = finalCsv + articleOb.reportData() + str(grade) + "\n"
+        final_csv = final_csv + articleOb.report_data() + str(grade) + "\n"
 
         if finished == "y":
-            return finalCsv
+            return final_csv
 
-    return finalCsv
+    return final_csv
 
 # cleans up the formatting, making it more readable
 articles = articles.replace("<article>", "")
@@ -121,10 +122,10 @@ for workingArticle in articleTextList:
     currentArticle = Article(classifierWords, workingArticle)
     articleObjects.append(currentArticle)
 
-finalCsv = makeCsv(articleObjects)
+endCsv = make_csv(articleObjects)
 
-with open("csvData.txt","w") as f:
-    f.write(finalCsv)
+with open("csvData.txt", "w") as f:
+    f.write(endCsv)
 
 
 
