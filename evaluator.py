@@ -23,10 +23,17 @@ class Article(object):
     def get_text(self):
         return self.article_text
 
+    def get_score(self):
+        return self.score
+
     def set_score(self, score_value):
         self.score = score_value
 
-    def report_data(self):
+    def get_data(self):
+        return self.keywordFrequencies
+
+
+    def report(self):
         csv = ""
         for value in self.keywordFrequencies:
             csv = csv + str(value) + ","
@@ -133,4 +140,7 @@ if __name__ == "__main__":
     print("Writing csv to file csvData.csv")
     with open("csvData.csv", "w") as f:
         for a in graded_articles:
-            f.write(a.report_data())
+            f.write(a.report())
+
+
+
