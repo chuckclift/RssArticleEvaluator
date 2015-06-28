@@ -1,9 +1,0 @@
-﻿<article>
-Sometimes you want or need a program to automatically run with elevated privileges as soon as you sign into Windows, but how do you set something like this up? Today’s SuperUser Q&A post has some helpful advice for a frustrated reader.
-</article>
-<article>
-You already solved the input side; you specified an encoding when reading. Do the same when writing: specify a codec to use to write out the file that can handle Unicode, including the non-breaking whitespace character at codepoint U+FEFF. UTF-8 is usually a good default choice:
-</article>
-<article>
-This is my article, don't you like it? I love pie.  I like the raspberry pi, but sometimes I wonder whether it is worth its cost.  Nvidia. 
-</article>
