@@ -1,146 +1,112 @@
-﻿from __future__ import division
+#!/usr/bin/python
+
+import pickle
 import re
 
-
-LOWEST_GRADE = 1
-HIGHEST_GRADE = 5
-MAX_WORD_COUNT = 20
-
-
-class Article(object):
-    def __init__(self, keywords, article_text):
-        self.keywords = keywords
-        self.article_text = article_text.replace("  ", "")
-        self.keywordFrequencies = []
-        self.score = 0.0
-
-        for word in keywords:
-            regex = "[ \.\?\"\'!,]" + word + "[ \.\?\"\'!,s]"
-            count = len(re.findall(regex, self.article_text.lower()))
-            normalized_score = count / MAX_WORD_COUNT
-            self.keywordFrequencies.append(normalized_score)
-
-    def get_text(self):
-        return self.article_text
-
-    def get_score(self):
-        return self.score
-
-    def set_score(self, score_value):
-        self.score = score_value
-
-    def get_data(self):
-        return self.keywordFrequencies
-
-
-    def report(self):
-        csv = ""
-        for value in self.keywordFrequencies:
-            csv = csv + str(value) + ","
-        csv = csv + str(self.score) + "\n"
-
-        return csv
-
-
-def score_articles(article_object_list):
+def print_article(article_text):
     counter = 0
-    scored_articles = []
-
-    for articleOb in article_object_list:
-
-        current = articleOb.get_text()
-
-        while len(current) > 0:
-            # prints out one line for the user to read
-            try:
-                print(current[:70])
-            except UnicodeEncodeError:
-                pass
-
-            current = current[70:]
-
-            # every fifth line, it stops
-            # and waits for the user to read
-            counter += 1
-            if counter is 5:
-                counter = 0
-                input("")
-                # user presses enter to continue reading
-
-                # after the user is done reading, he is asked
-                # to assign a category.  It won't let him submit
-                # an empty string so he doesn't accidentally
-                # skip this part
-        grade = ""
-
-        question = ("Grade?("
-                    + str(LOWEST_GRADE)
-                    + "-"
-                    + str(HIGHEST_GRADE)
-                    + ")\n")
-
-        while len(grade) is 0:
-
-            grade = input(question)
-
-            if len(grade) > 0:
-                if int(grade) < LOWEST_GRADE:
-                    grade = ""
-                    print("Your number is too low\n")
-                elif int(grade) > HIGHEST_GRADE:
-                    grade = ""
-                    print("Your number is too high\n")
-
-        # Normalizing the data on the scale of zero to one
-        grade = (int(grade) - LOWEST_GRADE) / (HIGHEST_GRADE - LOWEST_GRADE)
-
-        articleOb.set_score(grade)
-        scored_articles.append(articleOb)
-
-        finished = input("Done?(y/n)\n")
-
-        if finished == "y":
-            return scored_articles
-
-    return scored_articles
+    word_list = article_text.split()
 
 
+    while len(word_list) > 0:
 
+        # generating the line of text for reading 
+        line = ""
+        while len(line) < 70:
+            # if the word list is empty, the article is 
+            # finished, so the loop can be broken out of
+            if len(word_list) == 0:
+                break
+
+            # adding new word to line because there is enough room
+            if len(line) + len(word_list[0]) < 70:
+                line = line + " " + word_list[0]
+                word_list = word_list[1:]
+
+            # otherwise, the word would put the line length
+            # over 70 characters, so this line is as big as
+            # it can be
+            else:
+                break
+
+            
+        # prints out one line for the user to read
+        try:
+            print(line)
+        except UnicodeEncodeError:
+            pass
+
+
+        # every fifth line, it stops
+        # and waits for the user to read
+        counter += 1
+        if counter >  5:
+            counter = 0
+            input("")
+            # user presses enter to continue reading
+
+
+def ask_for_category(category_list):
+    grade = ""
+    while len(grade) is 0:
+        print("Pick a category that describes this article.")
+        print("\n".join(category_list) + "\n")
+        grade = input("category: ")
+
+        if len(grade) == 0:
+            print("\n")
+        elif grade not in category_list:
+            grade = ""
+            print("invalid category")
+      
+    return grade
+   
 
 
 if __name__ == "__main__":
-    with open("classifierWords.txt") as f:
-        classifierWords = f.read()
-        classifierWords = classifierWords.split("\n")
-        classifierWords = filter(None, classifierWords)
-        classifierWords = [word.strip() for word in classifierWords]
-
-    with open("articles.txt") as g:
+    with open("content.txt") as g:
         articles = g.read()
 
-    # cleans up the formatting, making it more readable
-    articles = articles.replace("<article>", "")
-    articles = articles.replace("   ", "")
-    articles = articles.replace("\n", " ")
+    with open("categories.txt") as c:
+        grading_categories = c.read().split("\n")
+        grading_categories = [a.strip() for a in grading_categories]
+        grading_categories = [a for a in grading_categories if len(a) > 0]
 
-    # getting rid of the space after the last article
-    last = articles.rfind("</article")
-    articles = articles[:last]
+    # normalizing the whitespace
+    articles = articles.split()
+    articles = " ".join(articles)
+   
+    # retreiving the article titles and content 
+    titles = re.findall(r'<title>(.*?)</title>', articles)
+    texts = re.findall(r'<article>(.*?)</article>', articles)
 
-    # splitting articles into a list for processing in the upcoming loop
-    articleTextList = articles.split("</article>")
-    articleObjects = []
-
-    for workingArticle in articleTextList:
-        currentArticle = Article(classifierWords, workingArticle)
-        articleObjects.append(currentArticle)
-
-    graded_articles = score_articles(articleObjects)
-
-    print("Writing csv to file csvData.csv")
-    with open("csvData.csv", "w") as f:
-        for a in graded_articles:
-            f.write(a.report())
+    # adding the title to the text so it can be read and evalutated
+    texts = [ a + " " +  b for a, b in zip(titles, texts)]
 
 
+    # forming a list of graded articles so, if the user does not finish all
+    # of the articles, the list of scores and the list of articles will
+    # be the same length
+    graded_articles = []
 
+    # scoring each article
+    for grading_text, grading_title in zip(texts, titles):
+        print_article(grading_text)
+
+        # these are here so the user knows the grading prompt 
+        # is about to come up 
+        input("")
+        input("")
+        input("")
+     
+        category = ask_for_category(grading_categories)
+
+        graded_articles.append((grading_title, category, grading_text))
+
+        finished = input("Done?(y/n)\n")
+        if finished == "y":
+            break
+   
+
+    pickle.dump(graded_articles, open("gradedArticles.pkl", "wb")) 
+    print("Wrote info to gradedArticles.pkl")
