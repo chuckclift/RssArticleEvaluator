@@ -7,7 +7,6 @@ def print_article(article_text):
     counter = 0
     word_list = article_text.split()
 
-
     while len(word_list) > 0:
 
         # generating the line of text for reading 
@@ -42,13 +41,13 @@ def print_article(article_text):
         counter += 1
         if counter >  5:
             counter = 0
-            input("")
+            _ = input(" ")
             # user presses enter to continue reading
 
 
 def ask_for_category(category_list):
     grade = ""
-    while len(grade) is 0:
+    while len(grade) ==  0:
         print("Pick a category that describes this article.")
         print("\n".join(category_list) + "\n")
         grade = input("category: ")
@@ -61,9 +60,7 @@ def ask_for_category(category_list):
       
     return grade
    
-
-
-if __name__ == "__main__":
+def main():
     with open("content.txt") as g:
         articles = g.read()
 
@@ -108,5 +105,12 @@ if __name__ == "__main__":
             break
    
 
-    pickle.dump(graded_articles, open("gradedArticles.pkl", "wb")) 
-    print("Wrote info to gradedArticles.pkl")
+    with open("gradedArticles.pkl", "wb") as a:
+        pickle.dump(graded_articles, a) 
+        print("Wrote info to gradedArticles.pkl")
+
+
+
+
+if __name__ == "__main__":
+    main()
