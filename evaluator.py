@@ -2,6 +2,14 @@
 
 import pickle
 import re
+import random
+import time
+
+from sumy.parsers.plaintext import PlaintextParser
+from sumy.nlp.tokenizers import Tokenizer
+from sumy.nlp.stemmers import Stemmer
+from sumy.summarizers.lsa import LsaSummarizer as Summarizer
+from sumy.utils import get_stop_words
 
 def print_article(article_text):
     counter = 0
@@ -60,7 +68,7 @@ def ask_for_category(category_list):
       
     return grade
    
-def main():
+def create_model():
     with open("content.txt") as g:
         articles = g.read()
 
@@ -109,8 +117,83 @@ def main():
         pickle.dump(graded_articles, a) 
         print("Wrote info to gradedArticles.pkl")
 
+def append_model():
+    with open("content.txt") as g:
+        articles = g.read()
+
+    with open("categories.txt") as c:
+        grading_categories = c.read().split("\n")
+        grading_categories = [a.strip() for a in grading_categories]
+        grading_categories = [a for a in grading_categories if len(a) > 0]
 
 
+    LANGUAGE = "english"
+    SENTENCE_COUNT = 5
+    # normalizing the whitespace
+    articles = articles.split()
+    articles = " ".join(articles)
+   
+    # retreiving the article titles and content 
+    titles = re.findall(r'<title>(.*?)</title>', articles)
+    texts = re.findall(r'<article>(.*?)</article>', articles)
+
+    # adding the title to the text so it can be read and evalutated
+    target_content = [(a, b) for a, b in zip(titles, texts)]
+    (selected_title, selected_text) = random.choice(target_content)
+    
+    print_string = selected_title + ". " + selected_text
+
+    parser = PlaintextParser.from_string(print_string, Tokenizer(LANGUAGE))
+    stemmer = Stemmer(LANGUAGE)
+    summarizer = Summarizer(stemmer)
+    summarizer.stop_words = get_stop_words(LANGUAGE)
+    
+    sentences = [s for s in summarizer(parser.document, SENTENCE_COUNT)]
+    for s in sentences:
+        print(s)
+    # summary = " ".join(sentences)
+
+    # print_article(summary)
+
+    # these are here so the user knows the grading prompt 
+    # is about to come up 
+    input("")
+    input("")
+    input("")
+ 
+    category = ask_for_category(grading_categories)
+
+    saved_articles = []  
+    with open("gradedArticles.pkl", "rb") as a:
+        saved_articles = pickle.load(a)
+
+    saved_articles.append((selected_title, category, selected_text)) 
+
+    with open("gradedArticles.pkl", "wb") as a:
+        pickle.dump(saved_articles, a) 
+        print("Wrote info to gradedArticles.pkl")
+
+    print("you have finished grading the article.")
+    time.sleep(0.2)
+    finished = input("Done?(y/n)\n")
+    if finished == "n":
+        append_model()
+
+def main():
+        
+    while True:
+        print("type h for help")
+        choice = input("What would you like to do?(append or create)")
+        if choice == "append" or choice == "a":
+            append_model() 
+        if choice == "create" or choice == "c":
+            create_model()    
+        if choice == "e" or choice == "exit":
+            break
+        if choice == "help" or choice == "h" or choice == "?":
+            print("type 'a' to append models to existing model")            
+            print("type 'c' to create a new model")
+            print("type 'e' to exit this program")
 
 if __name__ == "__main__":
     main()

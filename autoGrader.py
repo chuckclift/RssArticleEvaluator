@@ -23,7 +23,8 @@ with open("content.txt") as c:
 # The training data is in a list of tuples
 # it is formatted like this
 # (title, category, text)
-ex_data = pickle.load(open("gradedArticles.pkl", "rb"))
+with open("gradedArticles.pkl", "rb") as k:
+    ex_data = pickle.load(k)
 
 ex_titles = [a[0] for a in ex_data]
 ex_categories = [a[1] for a in ex_data]
