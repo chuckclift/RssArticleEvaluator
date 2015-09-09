@@ -1,52 +1,52 @@
 #!/usr/bin/python3.4
 
-from nltk.tokenize import sent_tokenize
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.cluster import KMeans, MiniBatchKMeans
+import argparse
 import nltk
-import optparse
 import sys
+from string import punctuation
 
 def main():
-    parser = optparse.OptionParser()
-    parser.add_option("-f", action="store", default="",help="Input file")
-    parser.add_option("-c", action="store", type="int", default=15,
-                       help="The number of categories")
-    parser.add_option("-o", action="store", default="", help="Output file")
-
-    options, args = parser.parse_args()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("h", type=str,  help="History file")
+    args = parser.parse_args()
 
     headlines = [line for line in sys.stdin]
-    if options.f:
-        with open(options.f) as i:
-            headlines = i.read().split("\n")
 
-    headlines = [" ".join(h.split()) for h in headlines]
+    with open(args.h) as history:
+        old = [a for a in history]
 
 
-    sys.stdout.write("\n".join([" ".join((str(i), sen)) for i, sen in cluster_text(headlines, options.c)]))
+    headline_scores = cluster_text(headlines, old,  20)
+    print("Printing headlines")
+    for h in headline_scores:
+        print(h[0], h[1][:75])
 
-def important_words(text):
-    words = nltk.word_tokenize(text)
-    tags = nltk.pos_tag(words)
+def interesting_words(text):
+    words = nltk.word_tokenize(text.lower())
+    stopwords = nltk.corpus.stopwords.words('english')
+    return " ".join([a for a in words if not a in stopwords])
 
-    return  " ".join([a[0] for a in tags 
-                     if a[1]=="NN" or a[1]=="VBP" or a[1]=="JJ"])
-    
+def cluster_text(texts, old,  clusters):
+    keywords = [interesting_words(a) for a in old + texts]
+    interesting_headlines = [(a,b) for a,b in zip(texts, keywords) if b] 
 
-def cluster_text(texts, clusters):
-    keywords = [important_words(a) for a in texts]
     vectorizer = TfidfVectorizer(stop_words="english", use_idf=True)
-    counts = vectorizer.fit_transform(keywords)
+    counts = vectorizer.fit_transform((a[1] for a in interesting_headlines))
 
-    km = KMeans(n_clusters=clusters)
-    guess = km.fit_predict(counts)
+    if len(interesting_headlines) > 10000:
+        km = KMeans(n_clusters=clusters)   
+    else:
+        km = MiniBatchKMeans(n_clusters=clusters) 
+    
+    km.fit(
 
-    matched = [(guess[i],sent) for i, sent in enumerate(texts)]
+    matched = [(g,h[0]) for g,h in  zip(guess, interesting_headlines )]
     matched.sort()
-
-    return matched.copy()
+    matched = [a for a in matched if a[1] in texts]
+    return matched
 
 if __name__=="__main__":
     main()
